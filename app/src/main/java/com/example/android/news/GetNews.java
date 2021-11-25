@@ -25,6 +25,7 @@ public class GetNews {
                     @Override
                     public void onSuccess(ArticleResponse response) {
                         int totalArticles = response.getArticles().size();
+                        Log.i(TAG, "onSuccess: "+totalArticles);
                         for (int i = 0; i < totalArticles; i++) {
                             String title = response.getArticles().get(i).getTitle();
                             String urlToImage = response.getArticles().get(i).getUrlToImage();
@@ -38,6 +39,7 @@ public class GetNews {
                     }
                 }
         );
+
         return list;
     }
 

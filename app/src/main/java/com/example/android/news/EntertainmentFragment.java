@@ -6,10 +6,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ public class EntertainmentFragment extends Fragment {
 
     private static final String TAG = "EntertainmentFragment" ;
     private FragmentBinding binding;
+    private static boolean isDataLoaded = true;
 
     public EntertainmentFragment() {
         // Required empty public constructor
@@ -39,13 +43,28 @@ public class EntertainmentFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        List<News> list = GetNews.getNews("entertainment");
-        handler.postDelayed(() -> {
-            NewsAdapter adapter = new NewsAdapter(list);
-            binding.recyclerView.setHasFixedSize(true);
-            binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            binding.recyclerView.setAdapter(adapter);
-        },2000);
+        Log.i(TAG, "onViewCreated: ");
+        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        if(isDataLoaded){
+            Handler handler = new Handler(Looper.getMainLooper());
+            List<News> list = GetNews.getNews("entertainment");
+            handler.postDelayed(() -> {
+                sharedViewModel.setEntertainmentLiveData(list);
+                isDataLoaded = false;
+            },2000);
+        }
+        NewsAdapter adapter = new NewsAdapter(null);
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recyclerView.setAdapter(adapter);
+        sharedViewModel.getEntertainmentLiveData().observe(getViewLifecycleOwner(), new Observer<List<News>>() {
+            @Override
+            public void onChanged(List<News> list) {
+                Log.i(TAG, "onChanged: Entertainment");
+                binding.progressBar.setVisibility(View.GONE);
+                adapter.setList(list);
+            }
+        });
+
     }
 }

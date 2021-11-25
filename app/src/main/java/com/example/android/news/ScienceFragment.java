@@ -7,10 +7,13 @@ import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +26,7 @@ import java.util.List;
 public class ScienceFragment extends Fragment {
     private static final String TAG = "ScienceFragment" ;
     private FragmentBinding binding;
+    private static boolean isDataLoaded = true;
 
     public ScienceFragment() {
         // Required empty public constructor
@@ -39,13 +43,28 @@ public class ScienceFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Handler handler = new Handler(Looper.getMainLooper());
-        List<News> list = GetNews.getNews("science");
-        handler.postDelayed(() -> {
-            NewsAdapter adapter = new NewsAdapter(list);
-            binding.recyclerView.setHasFixedSize(true);
-            binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
-            binding.recyclerView.setAdapter(adapter);
-        },2000);
+        Log.i(TAG, "onViewCreated: ");
+        SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
+        if(isDataLoaded){
+            Handler handler = new Handler(Looper.getMainLooper());
+            List<News> list = GetNews.getNews("science");
+            handler.postDelayed(() -> {
+                sharedViewModel.setScienceLiveData(list);
+                isDataLoaded = false;
+            },2000);
+        }
+        NewsAdapter adapter = new NewsAdapter(null);
+        binding.recyclerView.setHasFixedSize(true);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
+        binding.recyclerView.setAdapter(adapter);
+        sharedViewModel.getScienceLiveData().observe(getViewLifecycleOwner(), new Observer<List<News>>() {
+            @Override
+            public void onChanged(List<News> list) {
+                Log.i(TAG, "onChanged: Science");
+                binding.progressBar.setVisibility(View.GONE);
+                adapter.setList(list);
+            }
+        });
+
     }
 }
