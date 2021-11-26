@@ -10,8 +10,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +24,7 @@ public class GeneralFragment extends Fragment {
 
     private static final String TAG = "GeneralFragment" ;
     private FragmentBinding binding;
-    private static boolean isDataLoaded = true;
+    private static boolean isDataNotLoaded = true;
 
     public GeneralFragment() {
         // Required empty public constructor
@@ -48,13 +46,9 @@ public class GeneralFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onViewCreated: ");
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        if(isDataLoaded){
-            Handler handler = new Handler(Looper.getMainLooper());
-            List<News> list = GetNews.getNews("general");
-            handler.postDelayed(() -> {
-                sharedViewModel.setGeneralLiveData(list);
-                isDataLoaded = false;
-            },2000);
+        if(isDataNotLoaded){
+            GetNews.getNews("general",sharedViewModel);
+            isDataNotLoaded = false;
         }
         NewsAdapter adapter = new NewsAdapter(null);
         binding.recyclerView.setHasFixedSize(true);

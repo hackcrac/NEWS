@@ -1,8 +1,7 @@
 package com.example.android.news;
 
-import android.content.Context;
+
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -49,7 +48,7 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private ListItemBinding listItemBinding;
+        private final ListItemBinding listItemBinding;
         public ViewHolder(@NonNull ListItemBinding listItemBinding) {
             super(listItemBinding.getRoot());
             this.listItemBinding = listItemBinding;

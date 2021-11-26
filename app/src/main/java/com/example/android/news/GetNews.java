@@ -13,7 +13,7 @@ import java.util.List;
 public class GetNews {
     private static final String TAG = "Get News";
 
-    public static List<News> getNews(String query){
+    public static void getNews(String query,SharedViewModel sharedViewModel){
         NewsApiClient newsApiClient = new NewsApiClient("cefa87a5dd07420a9c861423ed9cbec4");
         List<News> list = new ArrayList<>();
         newsApiClient.getEverything(
@@ -31,6 +31,22 @@ public class GetNews {
                             String urlToImage = response.getArticles().get(i).getUrlToImage();
                             list.add(new News(title, urlToImage));
                         }
+                        switch (query){
+                            case "general": sharedViewModel.setGeneralLiveData(list);
+                                break;
+                            case "entertainment": sharedViewModel.setEntertainmentLiveData(list);
+                                break;
+                            case "business": sharedViewModel.setBusinessLiveData(list);
+                                break;
+                            case "health": sharedViewModel.setHealthLiveData(list);
+                                break;
+                            case "science": sharedViewModel.setScienceLiveData(list);
+                                break;
+                            case "sports": sharedViewModel.setSportsLiveData(list);
+                                break;
+                            case "technology": sharedViewModel.setTechnologyLiveData(list);
+                        }
+
                     }
 
                     @Override
@@ -39,8 +55,5 @@ public class GetNews {
                     }
                 }
         );
-
-        return list;
     }
-
 }

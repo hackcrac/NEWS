@@ -25,7 +25,7 @@ import java.util.List;
 public class TechnologyFragment extends Fragment {
     private static final String TAG = "TechnologyFragment" ;
     private FragmentBinding binding;
-    private static boolean isDataLoaded = true;
+    private static boolean isDataNotLoaded = true;
 
     public TechnologyFragment() {
         // Required empty public constructor
@@ -44,13 +44,9 @@ public class TechnologyFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onViewCreated: ");
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
-        if(isDataLoaded){
-            Handler handler = new Handler(Looper.getMainLooper());
-            List<News> list = GetNews.getNews("technology");
-            handler.postDelayed(() -> {
-                sharedViewModel.setTechnologyLiveData(list);
-                isDataLoaded = false;
-            },2000);
+        if(isDataNotLoaded){
+            GetNews.getNews("technology",sharedViewModel);
+            isDataNotLoaded = false;
         }
         NewsAdapter adapter = new NewsAdapter(null);
         binding.recyclerView.setHasFixedSize(true);
