@@ -29,7 +29,7 @@
             app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
-            android:loadImage="@{news.imageToUrl}"
+            android:loadImage="@{news.urlToImage}"
             android:id="@+id/imageView"
             android:scaleType="centerCrop"
             android:layout_width="@dimen/image_width"

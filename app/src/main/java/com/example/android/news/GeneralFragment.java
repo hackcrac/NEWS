@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.news.Networking.GetArticles;
 import com.example.android.news.databinding.FragmentBinding;
 
 import java.util.List;
@@ -47,7 +48,7 @@ public class GeneralFragment extends Fragment {
         Log.i(TAG, "onViewCreated: ");
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         if(isDataNotLoaded){
-            GetNews.getNews("general",sharedViewModel);
+            GetArticles.getArticles("general",sharedViewModel);
             isDataNotLoaded = false;
         }
         NewsAdapter adapter = new NewsAdapter(null);

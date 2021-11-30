@@ -8,19 +8,19 @@ import com.bumptech.glide.Glide;
 
 public class News {
     private final String title;
-    private final String imageToUrl;
+    private final String urlToImage;
 
-    public News(String title, String imageToUrl) {
+    public News(String title, String urlToImage) {
         this.title = title;
-        this.imageToUrl = imageToUrl;
+        this.urlToImage = urlToImage;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getImageToUrl() {
-        return imageToUrl;
+    public String getUrlToImage() {
+        return urlToImage;
     }
 
     @BindingAdapter("android:loadImage")
