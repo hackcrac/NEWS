@@ -14,6 +14,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.android.news.data.Article;
+import com.example.android.news.networking.GetArticles;
 import com.example.android.news.databinding.FragmentBinding;
 
 import java.util.List;
@@ -43,16 +45,16 @@ public class EntertainmentFragment extends Fragment {
         Log.i(TAG, "onViewCreated: ");
         SharedViewModel sharedViewModel = new ViewModelProvider(requireActivity()).get(SharedViewModel.class);
         if(isDataNotLoaded){
-            GetNews.getNews("entertainment",sharedViewModel);
+            GetArticles.getArticles("entertainment",sharedViewModel);
             isDataNotLoaded = false;
         }
         NewsAdapter adapter = new NewsAdapter(null);
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerView.setAdapter(adapter);
-        sharedViewModel.getEntertainmentLiveData().observe(getViewLifecycleOwner(), new Observer<List<News>>() {
+        sharedViewModel.getEntertainmentLiveData().observe(getViewLifecycleOwner(), new Observer<List<Article>>() {
             @Override
-            public void onChanged(List<News> list) {
+            public void onChanged(List<Article> list) {
                 Log.i(TAG, "onChanged: Entertainment");
                 binding.progressBar.setVisibility(View.GONE);
                 adapter.setList(list);

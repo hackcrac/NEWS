@@ -15,7 +15,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.android.news.Networking.GetArticles;
+import com.example.android.news.data.Article;
+import com.example.android.news.networking.GetArticles;
 import com.example.android.news.databinding.FragmentBinding;
 
 import java.util.List;
@@ -55,9 +56,9 @@ public class GeneralFragment extends Fragment {
         binding.recyclerView.setHasFixedSize(true);
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recyclerView.setAdapter(adapter);
-        sharedViewModel.getGeneralLiveData().observe(getViewLifecycleOwner(), new Observer<List<News>>() {
+        sharedViewModel.getGeneralLiveData().observe(getViewLifecycleOwner(), new Observer<List<Article>>() {
             @Override
-            public void onChanged(List<News> list) {
+            public void onChanged(List<Article> list) {
                 Log.i(TAG, "onChanged: General");
                 binding.progressBar.setVisibility(View.GONE);
                 adapter.setList(list);

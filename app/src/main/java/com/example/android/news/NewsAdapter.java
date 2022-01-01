@@ -8,15 +8,16 @@ import androidx.annotation.NonNull;
 import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.android.news.data.Article;
 import com.example.android.news.databinding.ListItemBinding;
 
 import java.util.List;
 
 public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
-    private List<News> list;
+    private List<Article> list;
 
-    public NewsAdapter(List<News> list){
+    public NewsAdapter(List<Article> list){
         this.list = list;
     }
 
@@ -30,11 +31,11 @@ public class NewsAdapter extends RecyclerView.Adapter<NewsAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull NewsAdapter.ViewHolder holder, int position) {
-        holder.listItemBinding.setNews(list.get(position));
+        holder.listItemBinding.setArticle(list.get(position));
         holder.listItemBinding.executePendingBindings();
     }
 
-    public void setList(List<News> list){
+    public void setList(List<Article> list){
         this.list = list;
         notifyDataSetChanged();
     }

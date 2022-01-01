@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidStudioProjects/NEWS/app/src/main/res/layout/list_item.xml" value="0.13360507246376813" />
         <entry key="..\:/Users/ratho/AndroidStudioProjects/NEWS/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
         <entry key="..\:/Users/ratho/AndroidStudioProjects/NEWS/app/src/main/res/layout/fragment.xml" value="0.1068840579710145" />
         <entry key="..\:/Users/ratho/AndroidStudioProjects/NEWS/app/src/main/res/layout/fragment_bussiness.xml" value="0.17300724637681159" />
@@ -12,7 +13,7 @@
         <entry key="..\:/Users/ratho/AndroidStudioProjects/NEWS/app/src/main/res/layout/fragment_science.xml" value="0.17300724637681159" />
         <entry key="..\:/Users/ratho/AndroidStudioProjects/NEWS/app/src/main/res/layout/fragment_sports.xml" value="0.17300724637681159" />
         <entry key="..\:/Users/ratho/AndroidStudioProjects/NEWS/app/src/main/res/layout/fragment_technology.xml" value="0.17300724637681159" />
-        <entry key="..\:/Users/ratho/AndroidStudioProjects/NEWS/app/src/main/res/layout/list_item.xml" value="0.2" />
+        <entry key="..\:/Users/ratho/AndroidStudioProjects/NEWS/app/src/main/res/layout/list_item.xml" value="0.264" />
       </map>
     </option>
   </component>

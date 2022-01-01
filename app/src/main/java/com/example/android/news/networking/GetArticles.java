@@ -1,14 +1,13 @@
-package com.example.android.news.Networking;
+package com.example.android.news.networking;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.android.news.Json.Json;
-import com.example.android.news.News;
+import com.example.android.news.data.Article;
+import com.example.android.news.data.Json;
 import com.example.android.news.SharedViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -29,7 +28,6 @@ public class GetArticles {
 
     public static void getArticles(String query , SharedViewModel sharedViewModel){
         Call<Json> jsonCall = service.JsonRepos(query,apiKey);
-        List<News> list = new ArrayList<>();
         jsonCall.enqueue(new Callback<Json>() {
             @Override
             public void onResponse(@NonNull Call<Json> call, @NonNull Response<Json> response) {
@@ -37,13 +35,10 @@ public class GetArticles {
                     Log.i(TAG, "onResponse: "+response.errorBody());
                     return;
                 }
-                int totalArticles = response.body().getArticles().size();
-                Log.i(TAG, "onResponse: "+totalArticles);
-                for (int i = 0; i < totalArticles; i++) {
-                    String title = response.body().getArticles().get(i).getTitle();
-                    String urlToImage = response.body().getArticles().get(i).getUrlToImage();
-                    list.add(new News(title, urlToImage));
-                }
+
+                List<Article> list = response.body().getArticles();
+                Log.i(TAG, "onResponse: "+list.size());
+
                 switch (query){
                     case "general": sharedViewModel.setGeneralLiveData(list);
                         break;
